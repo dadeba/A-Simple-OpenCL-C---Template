@@ -1,2 +1,15 @@
 A Simple OpenCL C++ Template 
     N.Nakasato (nakasato@u-aizu.ac.jp)
+
+1. build
+   type make
+
+To build this code, you need "cl.hpp" header file.
+It is available at http://www.khronos.org/registry/cl/
+I have tested the code with OpenCL 1.1.
+
+2. run
+   ./run 0 0
+
+The first argument select a platform (AMD SDK, Intel SDK or NVIDIA SDK....).
+The second argument select a device (CPU or GPU, or any exotic device).
