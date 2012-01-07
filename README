@@ -13,3 +13,8 @@ I have tested the code with OpenCL 1.1.
 
 The first argument select a platform (AMD SDK, Intel SDK or NVIDIA SDK....).
 The second argument select a device (CPU or GPU, or any exotic device).
+
+
+Note for MacOS X
+Please directly include "cl.hpp" after downloading.
+And you need a linker option such as "-framework OpenCL" not "-lOpenCL".
