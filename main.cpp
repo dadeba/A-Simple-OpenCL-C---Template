@@ -21,10 +21,12 @@ void LoadOpenCLKernel(const char *kernelfile);
 
 int main(int narg, char **argv)
 {
-  if (narg != 3) exit(-1);
-
   // select platform and device
-  SetupDevice(atoi(argv[1]), atoi(argv[2]));
+  if (narg != 3) {
+    SetupDevice(0, 0);
+  } else {
+    SetupDevice(atoi(argv[1]), atoi(argv[2]));
+  }
 
   // load kernel string
   LoadOpenCLKernel(kernel_str);
@@ -70,6 +72,16 @@ void SetupDevice(unsigned int ip, unsigned int id)
 {
   try {
     cl::Platform::get(&pl);
+
+    for(unsigned int i = 0; i < pl.size(); i++) {
+      std::cerr << "platform " << i << " " << pl[i].getInfo<CL_PLATFORM_NAME>().c_str() << " "
+	      << pl[i].getInfo<CL_PLATFORM_VERSION>().c_str() << "\n";    
+      pl[i].getDevices(CL_DEVICE_TYPE_ALL, &devs);
+      for(unsigned int j = 0; j < devs.size(); j++) {
+	std::cerr << "\tdevice " << j << " " << devs[j].getInfo<CL_DEVICE_NAME>().c_str() << "\n";
+      }
+    }
+    std::cerr << "\n"; 
 
     if (pl.size() <= ip) throw cl::Error(-1, "FATAL: the specifed platform does not exist");
     std::cerr << pl[ip].getInfo<CL_PLATFORM_NAME>().c_str() << " "
