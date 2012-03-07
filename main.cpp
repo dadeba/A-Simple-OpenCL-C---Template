@@ -80,6 +80,14 @@ void SetupDevice(unsigned int ip, unsigned int id)
       for(unsigned int j = 0; j < devs.size(); j++) {
 	std::cerr << "\tdevice " << j << " " << devs[j].getInfo<CL_DEVICE_NAME>().c_str() << "\n";
       }
+
+      cl::Context context(CL_DEVICE_TYPE_GPU);
+      std::vector<cl::Device> devs = context.getInfo<CL_CONTEXT_DEVICES>();
+      std::cerr << "I Found " << devs.size() << "\n";
+
+      cl::Context ctx2 = cl::Context(devs);
+      std::vector<cl::Device> devs2 = ctx2.getInfo<CL_CONTEXT_DEVICES>();
+      std::cerr << "I Found " << devs2.size() << "\n";
     }
     std::cerr << "\n"; 
 
